@@ -1,4 +1,4 @@
-VERSION=11.0.0
+VERSION=12.0.0
 
 BASE_DIR=$(shell pwd)
 INSTALL_DIR=${BASE_DIR}/llvm-install
@@ -13,42 +13,42 @@ llvm: ${LLVM_TAR_FILE}
 ${LLVM_TAR_FILE}:
 	$("- Download llvm")
 	wget https://github.com/llvm/llvm-project/releases/download/llvmorg-${VERSION}/llvm-${VERSION}.src.tar.xz && \
-	tar xf llvm-${VERSION}.src.tar.xz && \
-	mv llvm-${VERSION}.src llvm
-	
+		tar xf llvm-${VERSION}.src.tar.xz && \
+		mv llvm-${VERSION}.src llvm
+
 clang: llvm/tools/clang
 
-llvm/tools/clang: ${CLANG_TAR_FILE} 
+llvm/tools/clang: ${CLANG_TAR_FILE}
 
 ${CLANG_TAR_FILE}:
 	$("- Download clang")
 	cd llvm/tools && \
-	wget https://github.com/llvm/llvm-project/releases/download/llvmorg-${VERSION}/clang-${VERSION}.src.tar.xz && \
-	tar xf clang-${VERSION}.src.tar.xz && \
-	mv clang-${VERSION}.src clang
+		wget https://github.com/llvm/llvm-project/releases/download/llvmorg-${VERSION}/clang-${VERSION}.src.tar.xz && \
+		tar xf clang-${VERSION}.src.tar.xz && \
+		mv clang-${VERSION}.src clang
 
-build: 
+build:
 	$("- Build llvm")
 	mkdir -p llvm-objects && \
-	cd llvm-objects && \
-	cmake -DCMAKE_BUILD_TYPE=Release ../llvm && \
-	make && \
-	cmake -DCMAKE_INSTALL_PREFIX=../llvm-install/ -P cmake_install.cmake
+		cd llvm-objects && \
+		cmake -DCMAKE_BUILD_TYPE=Release ../llvm && \
+		make && \
+		cmake -DCMAKE_INSTALL_PREFIX=../llvm-install/ -P cmake_install.cmake
 
 env: llvmEnv
 
-llvmEnv: 
+llvmEnv:
 	echo '##########################' > llvmEnv &&\
-	echo '#   LLVM ENV VARIABLES   # ' >> llvmEnv &&\
-	echo '##########################' >> llvmEnv &&\
-	echo 'export LLVM_DIR=${BASE_DIR}' >> llvmEnv &&\
-	echo 'export LLVM_SRC=${BASE_DIR}/llvm' >> llvmEnv &&\
-	echo 'export LLVM_SRC_ROOT=${BASE_DIR}/llvm' >> llvmEnv &&\
-	echo 'export LLVM_ROOT=${BASE_DIR}/llvm' >> llvmEnv &&\
-	echo 'export LLVM_OBJ=${BASE_DIR}/llvm-objects' >> llvmEnv &&\
-	echo 'export LLVM_OBJ_DIR=${BASE_DIR}/llvm-objects' >> llvmEnv &&\
-	echo 'export LLVM_OBJ_ROOT=${BASE_DIR}/llvm-objects' >> llvmEnv &&\
-	echo 'export LLVM_INSTALL_DIR=${BASE_DIR}/llvm-install' >> llvmEnv &&\
-	echo 'export PATH=${BASE_DIR}/llvm-install/bin:$$PATH' >> llvmEnv &&\
-	echo "source ${BASE_DIR}/llvmEnv" >> ~/.bashrc
+		echo '#   LLVM ENV VARIABLES   # ' >> llvmEnv &&\
+		echo '##########################' >> llvmEnv &&\
+		echo 'export LLVM_DIR=${BASE_DIR}' >> llvmEnv &&\
+		echo 'export LLVM_SRC=${BASE_DIR}/llvm' >> llvmEnv &&\
+		echo 'export LLVM_SRC_ROOT=${BASE_DIR}/llvm' >> llvmEnv &&\
+		echo 'export LLVM_ROOT=${BASE_DIR}/llvm' >> llvmEnv &&\
+		echo 'export LLVM_OBJ=${BASE_DIR}/llvm-objects' >> llvmEnv &&\
+		echo 'export LLVM_OBJ_DIR=${BASE_DIR}/llvm-objects' >> llvmEnv &&\
+		echo 'export LLVM_OBJ_ROOT=${BASE_DIR}/llvm-objects' >> llvmEnv &&\
+		echo 'export LLVM_INSTALL_DIR=${BASE_DIR}/llvm-install' >> llvmEnv &&\
+		echo 'export PATH=${BASE_DIR}/llvm-install/bin:$$PATH' >> llvmEnv &&\
+		echo "source ${BASE_DIR}/llvmEnv" >> ~/.bashrc
 
