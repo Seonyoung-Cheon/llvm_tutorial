@@ -32,7 +32,7 @@ build:
 	mkdir -p llvm-objects && \
 		cd llvm-objects && \
 		cmake -DCMAKE_BUILD_TYPE=Release ../llvm && \
-		make && \
+		make -j8 && \
 		cmake -DCMAKE_INSTALL_PREFIX=../llvm-install/ -P cmake_install.cmake
 
 env: llvmEnv
