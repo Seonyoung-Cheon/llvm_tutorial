@@ -1,5 +1,5 @@
 ifneq ($(LIBRARY),)
-EXTRA_FLAGS=-fpic -fno-rtti
+EXTRA_FLAGS=-std=c++17 -fpic -fno-rtti
 endif
 
 OBJECTS=$(SOURCES:.cpp=.o)
@@ -28,7 +28,7 @@ $(TEST).exe: $(TEST).opt.bc
 	clang $< $(TEST_LIB_FLAG) -o $@
 
 $(TEST).opt.bc: $(TEST).bc $(LIBRARY)
-	opt -load ./$(LIBRARY) -$(PASSNAME) $< -o $@
+	opt -enable-new-pm=0 -load ./$(LIBRARY) -$(PASSNAME) $< -o $@
 	llvm-dis $@
 
 $(TEST).bc: $(TEST).c
