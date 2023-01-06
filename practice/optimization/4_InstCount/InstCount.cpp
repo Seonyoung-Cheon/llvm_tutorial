@@ -3,12 +3,22 @@
 #include "llvm/IR/Instructions.h"
 #include "InstCount.h"
 
-bool InstCount::runOnFunction(Function &F) {
-    return false;
+bool InstCount::runOnModule(Module &M) {
+  for(Function &F : M){
+    dbgs() << F.getName() << " Inst Count : ";
+    int cnt = 0;
+    for(BasicBlock &BB : F){
+      for(Instruction &I : BB){
+        cnt++;
+      }
+    }
+    dbgs() << cnt << '\n';
+  }
+  return false;
 }
 
 void InstCount::getAnalysisUsage(AnalysisUsage &AU) const {
-    AU.setPreservesAll();
+  AU.setPreservesAll();
 }
 
 char InstCount::ID = 0;

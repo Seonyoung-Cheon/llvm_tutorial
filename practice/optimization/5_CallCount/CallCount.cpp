@@ -4,11 +4,22 @@
 #include "CallCount.h"
 
 bool CallCount::runOnFunction(Function &F) {
-    return false;
+  int cnt = 0;
+  dbgs() << F.getName() << "Call Count : ";
+  for(BasicBlock &BB : F){
+    for(Instruction &I : BB) {
+      if(CallInst* CI = dyn_cast<CallInst>(&I)){
+        cnt++;
+      }
+
+    }
+  }
+  dbgs() << cnt << '\n';
+  return false;
 }
 
 void CallCount::getAnalysisUsage(AnalysisUsage &AU) const {
-    AU.setPreservesAll();
+  AU.setPreservesAll();
 }
 
 char CallCount::ID = 0;

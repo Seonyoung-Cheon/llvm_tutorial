@@ -1,4 +1,4 @@
-int a (int t) {
+int a () {
   return 0;
 }
 
@@ -9,6 +9,5 @@ void c () {
 }
 
 int main () {
-  a(0);
   return 0;
 }

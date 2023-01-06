@@ -3,18 +3,19 @@
 
 #include "llvm/IR/Function.h"
 #include "llvm/Pass.h"
+#include "llvm/Analysis/LoopInfo.h"
 
 using namespace llvm;
 
 namespace {
-    struct LoopInfoPrinter : public FunctionPass {
-        static char ID; // Pass identification, replacement for typeid
-        LoopInfoPrinter() : FunctionPass(ID) {}
+  struct LoopInfoPrinter : public FunctionPass {
+    static char ID; // Pass identification, replacement for typeid
+    LoopInfoPrinter() : FunctionPass(ID) {}
 
-        bool runOnFunction(Function &F) override;
+    bool runOnFunction(Function &F) override;
 
-        void getAnalysisUsage(AnalysisUsage &AU) const override;
-    };
+    void getAnalysisUsage(AnalysisUsage &AU) const override;
+  };
 }
 
 #endif

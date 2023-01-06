@@ -3,7 +3,7 @@
 
 #include "llvm/IR/Module.h"
 #include "llvm/Pass.h"
-
+#include <vector>
 using namespace llvm;
 
 namespace {
