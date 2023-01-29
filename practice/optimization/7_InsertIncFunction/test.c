@@ -1,14 +1,18 @@
+#include<stdio.h>
+
 int a (int t) {
-  return 0;
+  return t;
 }
 
-void b () {
+int b (int t) {
+  return a(t);
 }
 
-void c () {
+int c (int t) {
+  return b(t);
 }
 
 int main () {
-  a(0);
+  printf("result : %d\n", c(0));
   return 0;
 }
